@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<cabecalho>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<titulo>Miguel Lima · Dev Portfolio</titulo>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600;700&family=Noto+Serif+JP:wght@400;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<style>
+
+  :root {
+    --fundo: #0a0a12;
+    --fundo2: #0f0f1e;
+    --painel: #13131f;
+    --borda: #2a2a45;
+    --destaque: #e63c5e;
+    --destaque2: #7b5cf0;
+    --destaque3: #00d4ff;
+    --ouro: #f5c842;
+    --texto: #e8e8f5;
+    --texto-fraco: #7878a8;
+    --brilho: 0 0 20px rgba(230,60,94,0.4);
+    --brilho2: 0 0 20px rgba(123,92,240,0.4);
+    --altura-nav: 64px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  corpo {
+    background: var(--fundo);
+    color: var(--texto);
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 16px;
+    overflow-x: hidden;
+    display: block;
+  }
+
+  @media (hover: hover) { corpo { cursor: none; } }
+  @media (hover: none) { #cursor, #anel-cursor { display: none !important; } }
+
+  #cursor {
+    position: fixed; width: 12px; height: 12px;
+    background: var(--destaque); border-radius: 50%;
+    pointer-events: none; z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: width 0.2s, height 0.2s, background 0.2s;
+    box-shadow: 0 0 10px var(--destaque);
+  }
+  #anel-cursor {
+    position: fixed; width: 36px; height: 36px;
+    border: 1.5px solid rgba(230,60,94,0.5); border-radius: 50%;
+    pointer-events: none; z-index: 9998;
+    transform: translate(-50%, -50%);
+  }
+
+  corpo::after {
+    content: ''; position: fixed; inset: 0;
+    background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.03) 2px, rgba(0,0,0,0.03) 4px);
+    pointer-events: none; z-index: 9990;
+  }
+
+  #particulas { position: fixed; inset: 0; pointer-events: none; z-index: 0; }
+
+  navegacao {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+    height: var(--altura-nav);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 40px;
+    background: rgba(10,10,18,0.92);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--borda);
+  }
+  .logo {
+    font-family: 'Noto Serif JP', serif; font-size: 1rem;
+    color: var(--destaque); letter-spacing: 3px; text-transform: uppercase;
+  }
+  .logo spansubtitulo { color: var(--texto-fraco); font-size: 0.75em; }
+  .links-nav { display: flex; gap: 28px; list-style: none; }
+  .links-nav ancora {
+    color: var(--texto-fraco); text-decoration: none;
+    font-size: 0.8rem; letter-spacing: 2px; text-transform: uppercase;
+    transition: color 0.3s; position: relative;
+  }
+  .links-nav ancora::after {
+    content: ''; position: absolute; bottom: -4px; left: 0;
+    width: 0; height: 1px; background: var(--destaque); transition: width 0.3s;
+  }
+  .links-nav ancora:hover { color: var(--destaque); }
+  .links-nav ancora:hover::after { width: 100%; }
+
+  .hamburguer {
+    display: none; flex-direction: column; gap: 5px;
+    cursor: pointer; padding: 6px; background: none; border: none; z-index: 201;
+  }
+  .hamburguer traco {
+    display: block; width: 24px; height: 2px;
+    background: var(--texto); transition: all 0.3s; transform-origin: center;
+  }
+  .hamburguer.aberto traco:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .hamburguer.aberto traco:nth-child(2) { opacity: 0; }
+  .hamburguer.aberto traco:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  .gaveta-nav {
+    display: none; position: fixed; top: var(--altura-nav); left: 0; right: 0;
+    background: rgba(10,10,18,0.98); backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--borda);
+    padding: 20px 30px; flex-direction: column;
+    z-index: 199; transform: translateY(-20px);
+    opacity: 0; transition: transform 0.3s ease, opacity 0.3s ease;
+    pointer-events: none;
+  }
+  .gaveta-nav.aberta { transform: translateY(0); opacity: 1; pointer-events: all; }
+  .gaveta-nav ancora {
+    display: block; color: var(--texto-fraco); text-decoration: none;
+    font-size: 1.05rem; letter-spacing: 3px; text-transform: uppercase;
+    padding: 13px 0; border-bottom: 1px solid var(--borda); transition: color 0.2s;
+  }
+  .gaveta-nav ancora:last-child { border-bottom: none; }
+  .gaveta-nav ancora:hover, .gaveta-nav ancora:active { color: var(--destaque); }
+
+  @media (max-width: 700px) {
+    navegacao { padding: 0 20px; }
+    .links-nav { display: none; }
+    .hamburguer { display: flex; }
+    .gaveta-nav { display: flex; }
+  }
+
+  secao#inicio {
+    position: relative; min-height: 100vh;
+    display: flex; align-items: center;
+    padding: calc(var(--altura-nav) + 60px) 40px 110px;
+    overflow: hidden;
+  }
+  .texto-fundo {
+    position: absolute;
+    font-family: 'Noto Serif JP', serif;
+    font-size: clamp(80px, 18vw, 280px);
+    font-weight: 700; color: rgba(255,255,255,0.018);
+    pointer-events: none; top: 50%; right: -20px;
+    transform: translateY(-50%); white-space: nowrap;
+    line-height: 1; user-select: none;
+  }
+  .conteudo-inicio { position: relative; z-index: 2; max-width: 680px; }
+  .etiqueta-inicio {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: rgba(230,60,94,0.1); border: 1px solid rgba(230,60,94,0.3);
+    padding: 6px 16px; border-radius: 2px;
+    font-size: 0.72rem; letter-spacing: 3px; color: var(--destaque);
+    text-transform: uppercase; margin-bottom: 24px;
+  }
+  .etiqueta-inicio::before {
+    content: ''; width: 6px; height: 6px;
+    background: var(--destaque); border-radius: 50%;
+    animation: piscar 1.2s infinite;
+  }
+  @keyframes piscar { 0%,100%{opacity:1} 50%{opacity:0.2} }
+  .nome-inicio {
+    font-family: 'Noto Serif JP', serif;
+    font-size: clamp(2.4rem, 8vw, 5.2rem);
+    font-weight: 700; line-height: 1.05; color: var(--texto); margin-bottom: 8px;
+  }
+  .nome-inicio .em-destaque { color: var(--destaque); }
+  .nome-inicio .kanji {
+    font-size: clamp(0.6rem, 2vw, 0.85rem); color: var(--texto-fraco);
+    display: block; letter-spacing: 6px; margin-top: 8px;
+  }
+  .cargo {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: clamp(0.82rem, 2.5vw, 1rem);
+    color: var(--destaque3); letter-spacing: 2px; margin-bottom: 20px; min-height: 1.5em;
+  }
+  .cargo .digitando::after { content: '|'; animation: piscar 0.7s infinite; color: var(--destaque); }
+  .descricao {
+    font-size: clamp(0.92rem, 2.5vw, 1.02rem); color: var(--texto-fraco);
+    line-height: 1.8; max-width: 500px; margin-bottom: 36px;
+  }
+  .botoes { display: flex; gap: 14px; flex-wrap: wrap; }
+
+  .botao-primario {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--destaque); color: white;
+    padding: 13px 26px; text-decoration: none;
+    font-weight: 700; font-size: 0.82rem; letter-spacing: 2px; text-transform: uppercase;
+    transition: all 0.3s;
+    clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+    position: relative; overflow: hidden;
+  }
+  .botao-primario::before {
+    content: ''; position: absolute; inset: 0;
+    background: rgba(255,255,255,0.15); transform: translateX(-100%); transition: transform 0.4s;
+  }
+  .botao-primario:hover::before { transform: translateX(0); }
+  .botao-primario:hover { box-shadow: var(--brilho); }
+  .botao-secundario {
+    display: inline-flex; align-items: center; gap: 8px;
+    border: 1px solid var(--borda); color: var(--texto-fraco);
+    padding: 13px 26px; text-decoration: none;
+    font-weight: 600; font-size: 0.82rem; letter-spacing: 2px; text-transform: uppercase;
+    transition: all 0.3s;
+    clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+  }
+  .botao-secundario:hover { border-color: var(--destaque2); color: var(--destaque2); box-shadow: var(--brilho2); }
+
+  .decoracao-inicio {
+    position: absolute; right: 80px; top: 50%; transform: translateY(-50%); z-index: 2;
+  }
+  .anel-externo {
+    width: 240px; height: 240px; border: 1px solid rgba(230,60,94,0.2);
+    border-radius: 50%; position: relative;
+    animation: girar 20s linear infinite;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .anel-externo::before {
+    content: ''; position: absolute; top: -4px; left: 50%; transform: translateX(-50%);
+    width: 8px; height: 8px; background: var(--destaque); border-radius: 50%;
+    box-shadow: 0 0 12px var(--destaque);
+  }
+  .anel-interno {
+    width: 165px; height: 165px; border: 1px solid rgba(123,92,240,0.3);
+    border-radius: 50%; animation: girar 12s linear infinite reverse;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .anel-interno::before {
+    content: ''; position: absolute; bottom: -4px; left: 50%; transform: translateX(-50%);
+    width: 6px; height: 6px; background: var(--destaque2); border-radius: 50%;
+    box-shadow: 0 0 10px var(--destaque2);
+  }
+  .centro-anel {
+    width: 80px; height: 80px;
+    background: linear-gradient(135deg, rgba(230,60,94,0.15), rgba(123,92,240,0.15));
+    border: 1px solid rgba(230,60,94,0.3);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 2rem; color: var(--destaque);
+  }
+  @keyframes girar { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
+  @media (max-width: 960px) { .decoracao-inicio { display: none; } }
+
+  .estatisticas {
+    position: absolute; bottom: 40px; left: 40px;
+    display: flex; gap: 28px; flex-wrap: wrap;
+  }
+  .stat { display: flex; flex-direction: column; }
+  .stat-numero {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: clamp(1.3rem, 4vw, 1.8rem); color: var(--destaque); line-height: 1;
+  }
+  .stat-rotulo { font-size: 0.67rem; color: var(--texto-fraco); letter-spacing: 2px; text-transform: uppercase; margin-top: 4px; }
+
+  @media (max-width: 480px) {
+    secao#inicio { padding: calc(var(--altura-nav) + 36px) 20px 130px; }
+    .estatisticas { left: 20px; bottom: 28px; gap: 20px; }
+  }
+
+  secao {
+    padding: 90px 40px; position: relative; z-index: 1;
+    display: block;
+  }
+  .cabecalho-secao { display: flex; align-items: center; gap: 16px; margin-bottom: 52px; }
+  .numero-secao { font-family: 'Share Tech Mono', monospace; font-size: 0.72rem; color: var(--destaque); letter-spacing: 3px; }
+  .titulo-secao {
+    font-family: 'Noto Serif JP', serif;
+    font-size: clamp(1.35rem, 3vw, 2rem); font-weight: 700; color: var(--texto);
+    position: relative; white-space: nowrap;
+  }
+  .titulo-secao::after {
+    content: ''; position: absolute; bottom: -6px; left: 0;
+    width: 36px; height: 2px; background: var(--destaque);
+  }
+  .linha-divisoria { flex: 1; height: 1px; background: linear-gradient(to right, var(--borda), transparent); min-width: 20px; }
+
+  @media (max-width: 480px) { secao { padding: 68px 20px; } .cabecalho-secao { margin-bottom: 36px; } }
+
+  secao#habilidades { background: var(--fundo2); }
+  .grade-habilidades { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 18px; }
+  @media (max-width: 560px) { .grade-habilidades { grid-template-columns: 1fr; } }
+
+  .cartao-habilidade {
+    background: var(--painel); border: 1px solid var(--borda); padding: 22px;
+    position: relative; overflow: hidden;
+    transition: border-color 0.3s, transform 0.3s;
+    clip-path: polygon(0 0, calc(100% - 14px) 0, 100% 14px, 100% 100%, 14px 100%, 0 calc(100% - 14px));
+  }
+  .cartao-habilidade:hover { border-color: var(--destaque); transform: translateY(-4px); }
+  .cartao-habilidade::before {
+    content: ''; position: absolute; top: 0; left: 0;
+    width: 3px; height: 0; background: var(--destaque); transition: height 0.4s;
+  }
+  .cartao-habilidade:hover::before { height: 100%; }
+  .icone-habilidade { font-size: 1.8rem; margin-bottom: 10px; }
+  .nome-habilidade { font-size: 1.05rem; font-weight: 700; color: var(--texto); margin-bottom: 8px; }
+  .barra-progresso { height: 3px; background: var(--borda); border-radius: 2px; margin-top: 12px; overflow: hidden; }
+  .preenchimento-barra { height: 100%; background: linear-gradient(to right, var(--destaque), var(--destaque2)); border-radius: 2px; width: 0; transition: width 1s ease; }
+  .etiquetas-habilidade { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+  .etiqueta-habilidade {
+    font-family: 'Share Tech Mono', monospace; font-size: 0.62rem;
+    background: rgba(123,92,240,0.1); border: 1px solid rgba(123,92,240,0.25);
+    color: var(--destaque2); padding: 3px 8px; letter-spacing: 1px;
+  }
+
+  secao#animes { overflow: hidden; }
+  .descricao-animes { color: var(--texto-fraco); font-size: 1rem; margin-bottom: 38px; line-height: 1.7; max-width: 580px; }
+
+  .grade-animes { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; }
+  @media (max-width: 900px) { .grade-animes { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 480px) { .grade-animes { grid-template-columns: repeat(2, 1fr); gap: 10px; } }
+
+  .cartao-anime {
+    position: relative; overflow: hidden;
+    border: 1px solid var(--borda);
+    clip-path: polygon(0 0, calc(100% - 14px) 0, 100% 14px, 100% 100%, 14px 100%, 0 calc(100% - 14px));
+    transition: border-color 0.3s, transform 0.3s;
+    aspect-ratio: 3/4;
+  }
+  .cartao-anime:hover { border-color: var(--destaque); transform: translateY(-6px); }
+  .fundo-anime {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: clamp(3rem, 6vw, 5rem);
+  }
+  .imagem-anime {
+    width: 100%; height: 100%; object-fit: cover;
+    transition: transform 0.5s; filter: brightness(0.82) saturate(1.15);
+    position: absolute; inset: 0;
+  }
+  .cartao-anime:hover .imagem-anime { transform: scale(1.06); filter: brightness(0.95) saturate(1.3); }
+  .sobreposicao-anime {
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(10,10,18,0.96) 0%, rgba(10,10,18,0.25) 55%, transparent 100%);
+    display: flex; flex-direction: column; justify-content: flex-end;
+    padding: 16px 14px;
+  }
+  .genero-anime { font-family: 'Share Tech Mono', monospace; font-size: 0.6rem; letter-spacing: 2px; text-transform: uppercase; color: var(--destaque3); margin-bottom: 4px; }
+  .titulo-anime { font-family: 'Noto Serif JP', serif; font-size: clamp(0.9rem, 2vw, 1.1rem); font-weight: 700; color: var(--texto); line-height: 1.2; margin-bottom: 3px; }
+  .titulo-japones { font-family: 'Noto Serif JP', serif; font-size: 0.72rem; color: var(--texto-fraco); letter-spacing: 2px; }
+  .estrelas { color: var(--ouro); font-size: 0.68rem; margin-top: 6px; letter-spacing: 1px; }
+
+  .grade-projetos { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 22px; }
+  @media (max-width: 660px) { .grade-projetos { grid-template-columns: 1fr; } }
+
+  .cartao-projeto {
+    background: var(--painel); border: 1px solid var(--borda);
+    position: relative; overflow: hidden;
+    transition: border-color 0.3s, transform 0.3s;
+    clip-path: polygon(0 0, calc(100% - 20px) 0, 100% 20px, 100% 100%, 20px 100%, 0 calc(100% - 20px));
+  }
+  .cartao-projeto:hover { border-color: var(--destaque); transform: translateY(-6px); }
+  .imagem-projeto { height: 165px; position: relative; overflow: hidden; }
+  .fundo-imagem-projeto { position: absolute; inset: 0; transition: transform 0.5s; }
+  .cartao-projeto:hover .fundo-imagem-projeto { transform: scale(1.05); }
+  .rotulo-projeto { position: absolute; bottom: 10px; left: 14px; font-family: 'Share Tech Mono', monospace; font-size: 0.62rem; color: rgba(255,255,255,0.5); letter-spacing: 2px; }
+  .status-projeto { position: absolute; top: 10px; right: 14px; font-size: 0.62rem; letter-spacing: 2px; padding: 4px 10px; text-transform: uppercase; }
+  .status-ativo { background: rgba(0,212,100,0.15); color: #00d464; border: 1px solid rgba(0,212,100,0.3); }
+  .status-andamento { background: rgba(245,200,66,0.15); color: var(--ouro); border: 1px solid rgba(245,200,66,0.3); }
+  .corpo-projeto { padding: 20px; }
+  .titulo-projeto { font-family: 'Noto Serif JP', serif; font-size: 1.1rem; font-weight: 700; color: var(--texto); margin-bottom: 8px; }
+  .descricao-projeto { font-size: 0.87rem; color: var(--texto-fraco); line-height: 1.7; margin-bottom: 14px; }
+  .tecnologias { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 16px; }
+  .tecnologias marcador { font-family: 'Share Tech Mono', monospace; font-size: 0.62rem; background: rgba(0,212,255,0.08); border: 1px solid rgba(0,212,255,0.2); color: var(--destaque3); padding: 3px 10px; letter-spacing: 1px; display: inline-block; }
+  .links-projeto { display: flex; gap: 10px; flex-wrap: wrap; }
+  .link-projeto { font-size: 0.72rem; letter-spacing: 2px; text-transform: uppercase; text-decoration: none; padding: 8px 16px; transition: all 0.3s; }
+  .link-demo { background: rgba(230,60,94,0.15); border: 1px solid rgba(230,60,94,0.3); color: var(--destaque); }
+  .link-demo:hover { background: var(--destaque); color: white; }
+  .link-codigo { background: transparent; border: 1px solid var(--borda); color: var(--texto-fraco); }
+  .link-codigo:hover { border-color: var(--texto-fraco); color: var(--texto); }
+
+  secao#sobre { background: var(--fundo2); }
+  .grade-sobre { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: start; }
+  @media (max-width: 800px) { .grade-sobre { grid-template-columns: 1fr; } }
+  .texto-sobre paragrafo { color: var(--texto-fraco); line-height: 1.9; margin-bottom: 16px; font-size: 0.98rem; display: block; }
+  .texto-sobre paragrafo enfase { color: var(--destaque); font-weight: 600; font-style: normal; }
+  .animes-favoritos { margin-top: 26px; }
+  .titulo-animes-favoritos { font-family: 'Share Tech Mono', monospace; font-size: 0.67rem; color: var(--destaque3); letter-spacing: 3px; text-transform: uppercase; margin-bottom: 12px; display: block; }
+  .lista-animes { display: flex; flex-wrap: wrap; gap: 8px; }
+  .pilula-anime {
+    display: flex; align-items: center; gap: 6px;
+    background: rgba(245,200,66,0.08); border: 1px solid rgba(245,200,66,0.2);
+    color: var(--ouro); padding: 5px 12px; font-size: 0.78rem; letter-spacing: 1px;
+    transition: all 0.3s;
+    clip-path: polygon(6px 0%, 100% 0%, calc(100% - 6px) 100%, 0% 100%);
+  }
+  .pilula-anime:hover { background: rgba(245,200,66,0.15); }
+  .info-pessoal { display: flex; flex-direction: column; gap: 12px; }
+  .linha-info {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 13px 18px; background: var(--painel); border: 1px solid var(--borda);
+    transition: border-color 0.3s; gap: 12px; flex-wrap: wrap;
+  }
+  .linha-info:hover { border-color: var(--destaque2); }
+  .rotulo-info { font-family: 'Share Tech Mono', monospace; font-size: 0.66rem; color: var(--texto-fraco); letter-spacing: 2px; text-transform: uppercase; flex-shrink: 0; }
+  .valor-info { font-size: 0.9rem; font-weight: 600; color: var(--texto); text-align: right; }
+
+  secao#contato {
+    text-align: center;
+    background: radial-gradient(ellipse 80% 60% at 50% 50%, rgba(230,60,94,0.06), transparent);
+  }
+  .frase-contato { font-family: 'Noto Serif JP', serif; font-size: clamp(1.25rem, 4vw, 2rem); color: var(--texto); margin-bottom: 14px; }
+  .sub-contato { color: var(--texto-fraco); font-size: 0.96rem; line-height: 1.7; margin-bottom: 34px; max-width: 460px; margin-inline: auto; }
+  .links-contato { display: flex; justify-content: center; flex-wrap: wrap; gap: 14px; }
+  .link-contato {
+    display: flex; align-items: center; gap: 10px; text-decoration: none;
+    padding: 13px 24px; border: 1px solid var(--borda);
+    color: var(--texto-fraco); font-size: 0.82rem; letter-spacing: 2px; text-transform: uppercase;
+    transition: all 0.3s;
+    clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
+  }
+  .link-contato:hover { border-color: var(--destaque); color: var(--destaque); box-shadow: var(--brilho); }
+
+  rodape {
+    display: flex;
+    padding: 20px 40px; border-top: 1px solid var(--borda);
+    align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 10px;
+  }
+  .rodape-logo { font-family: 'Noto Serif JP', serif; font-size: 0.8rem; color: var(--texto-fraco); }
+  .rodape-creditos { font-size: 0.7rem; color: var(--texto-fraco); letter-spacing: 1px; }
+  @media (max-width: 480px) { rodape { padding: 18px 20px; flex-direction: column; text-align: center; } }
+
+  .revelar { opacity: 0; transform: translateY(28px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .revelar.visivel { opacity: 1; transform: none; }
+  .revelar-atraso-1 { transition-delay: 0.1s; }
+  .revelar-atraso-2 { transition-delay: 0.2s; }
+  .revelar-atraso-3 { transition-delay: 0.3s; }
+
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: var(--fundo); }
+  ::-webkit-scrollbar-thumb { background: var(--destaque); }
+</style>
+</cabecalho>
+<corpo>
+
+<secao id="cursor-wrapper">
+  <marcador id="cursor"></marcador>
+  <marcador id="anel-cursor"></marcador>
+</secao>
+<canvas id="particulas"></canvas>
+
+<navegacao>
+  <marcador class="logo">ML<spansubtitulo> · ポートフォリオ</spansubtitulo></marcador>
+  <lista class="links-nav">
+    <item><ancora href="#inicio">Início</ancora></item>
+    <item><ancora href="#habilidades">Skills</ancora></item>
+    <item><ancora href="#animes">Animes</ancora></item>
+    <item><ancora href="#projetos">Projetos</ancora></item>
+    <item><ancora href="#sobre">Sobre</ancora></item>
+    <item><ancora href="#contato">Contato</ancora></item>
+  </lista>
+  <botao class="hamburguer" id="hamburguer" aria-label="Menu">
+    <traco></traco><traco></traco><traco></traco>
+  </botao>
+</navegacao>
+
+<marcador class="gaveta-nav" id="gaveta-nav">
+  <ancora href="#inicio">Início</ancora>
+  <ancora href="#habilidades">Skills</ancora>
+  <ancora href="#animes">Animes</ancora>
+  <ancora href="#projetos">Projetos</ancora>
+  <ancora href="#sobre">Sobre</ancora>
+  <ancora href="#contato">Contato</ancora>
+</marcador>
+
+<secao id="inicio">
+  <marcador class="texto-fundo">開発者</marcador>
+  <marcador class="conteudo-inicio">
+    <marcador class="etiqueta-inicio">Disponível para projetos</marcador>
+    <titulo1 class="nome-inicio">
+      Miguel Lima<marcador class="em-destaque">.</marcador>
+      <marcador class="kanji">ソフトウェア開発者</marcador>
+    </titulo1>
+    <paragrafo class="cargo"><marcador class="digitando" id="texto-digitando"></marcador></paragrafo>
+    <paragrafo class="descricao">Dev apaixonado por código limpo, interfaces bonitas e uma boa OST de anime tocando no fundo. Construindo o futuro um commit de cada vez.</paragrafo>
+    <marcador class="botoes">
+      <ancora href="#projetos" class="botao-primario"><marcador>Ver Projetos</marcador><marcador>→</marcador></ancora>
+      <ancora href="#contato" class="botao-secundario">Contato</ancora>
+    </marcador>
+  </marcador>
+  <marcador class="decoracao-inicio">
+    <marcador class="anel-externo">
+      <marcador class="anel-interno">
+        <marcador class="centro-anel">⌨</marcador>
+      </marcador>
+    </marcador>
+  </marcador>
+  <marcador class="estatisticas">
+    <marcador class="stat"><marcador class="stat-numero" data-alvo="5">0</marcador><marcador class="stat-rotulo">Projetos</marcador></marcador>
+    <marcador class="stat"><marcador class="stat-numero" data-alvo="1">0</marcador><marcador class="stat-rotulo">Ano de exp.</marcador></marcador>
+    <marcador class="stat"><marcador class="stat-numero" data-alvo="4">0</marcador><marcador class="stat-rotulo">Tecnologias</marcador></marcador>
+  </marcador>
+</secao>
+
+<secao id="habilidades">
+  <marcador class="cabecalho-secao">
+    <marcador class="numero-secao">01</marcador>
+    <titulo2 class="titulo-secao">Habilidades</titulo2>
+    <marcador class="linha-divisoria"></marcador>
+  </marcador>
+  <grade id="grade-habilidades" class="grade-habilidades"></grade>
+</secao>
+
+<secao id="animes">
+  <marcador class="cabecalho-secao">
+    <marcador class="numero-secao">02</marcador>
+    <titulo2 class="titulo-secao">Meus Animes</titulo2>
+    <marcador class="linha-divisoria"></marcador>
+  </marcador>
+  <paragrafo class="descricao-animes revelar">Além de codar, sou otaku sem arrependimentos. Aqui estão os animes que moram no meu coração — e na minha playlist no loop.</paragrafo>
+  <grade id="grade-animes" class="grade-animes"></grade>
+</secao>
+
+<secao id="projetos">
+  <marcador class="cabecalho-secao">
+    <marcador class="numero-secao">03</marcador>
+    <titulo2 class="titulo-secao">Projetos</titulo2>
+    <marcador class="linha-divisoria"></marcador>
+  </marcador>
+  <grade id="grade-projetos" class="grade-projetos"></grade>
+</secao>
+
+<secao id="sobre">
+  <marcador class="cabecalho-secao">
+    <marcador class="numero-secao">04</marcador>
+    <titulo2 class="titulo-secao">Sobre Mim</titulo2>
+    <marcador class="linha-divisoria"></marcador>
+  </marcador>
+  <marcador class="grade-sobre">
+    <marcador class="texto-sobre revelar">
+      <paragrafo>E aí! Sou <enfase>Miguel Lima</enfase>, desenvolvedor e estudante de <enfase>Análise e Desenvolvimento de Sistemas</enfase>. Acredito que bom código, assim como um bom anime, precisa de história, ritmo e impacto.</paragrafo>
+      <paragrafo>Com <enfase>1 ano de experiência</enfase>, estou sempre buscando aprender novas tecnologias e criar projetos que façam diferença. Cada bug resolvido é um boss derrotado.</paragrafo>
+      <paragrafo>Quando não estou codando, provavelmente estou maratonando algum anime novo ou debatendo qual arco do Blue Lock foi o melhor. Sem arrependimentos kkkk</paragrafo>
+      <marcador class="animes-favoritos">
+        <marcador class="titulo-animes-favoritos">▸ Top animes da lista</marcador>
+        <marcador class="lista-animes" id="lista-animes"></marcador>
+      </marcador>
+    </marcador>
+    <marcador class="info-pessoal revelar revelar-atraso-2" id="info-pessoal"></marcador>
+  </marcador>
+</secao>
+
+<secao id="contato">
+  <marcador class="cabecalho-secao" style="justify-content:center;margin-bottom:28px;">
+    <marcador class="numero-secao">05</marcador>
+    <titulo2 class="titulo-secao">Contato</titulo2>
+  </marcador>
+  <titulo3 class="frase-contato revelar">Vamos criar algo incrível juntos?</titulo3>
+  <paragrafo class="sub-contato revelar">Aberto a novos projetos, colaborações e boas conversas sobre tech (e anime, claro).</paragrafo>
+  <marcador class="links-contato revelar">
+    <ancora href="mailto:miguel@email.com" class="link-contato">✉ Email</ancora>
+    <ancora href="https://github.com" target="_blank" class="link-contato">⌥ GitHub</ancora>
+    <ancora href="https://linkedin.com" target="_blank" class="link-contato">⊞ LinkedIn</ancora>
+  </marcador>
+</secao>
+
+<rodape>
+  <marcador class="rodape-logo">© 2025 · Miguel Lima · ポートフォリオ</marcador>
+  <marcador class="rodape-creditos">Feito com ♥ café e OST de anime</marcador>
+</rodape>
+
+<script>
+const HABILIDADES = [
+  { icone: "🌐", nome: "Frontend", nivel: 80, etiquetas: ["HTML", "CSS", "JavaScript"] },
+  { icone: "⚙️", nome: "Backend", nivel: 65, etiquetas: ["Node.js", "Express", "REST API"] },
+  { icone: "🗄️", nome: "Banco de Dados", nivel: 60, etiquetas: ["MySQL", "MongoDB"] },
+  { icone: "🎨", nome: "UI / Design", nivel: 70, etiquetas: ["Figma", "CSS Animation", "Responsivo"] },
+  { icone: "🛠️", nome: "Ferramentas", nivel: 65, etiquetas: ["Git", "GitHub", "VS Code"] },
+  { icone: "🐍", nome: "Linguagens", nivel: 70, etiquetas: ["JavaScript", "Python", "Java"] },
+];
+
+const ANIMES = [
+  { titulo: "Blue Lock", japones: "ブルーロック", genero: "Esporte · Shounen", estrelas: "★★★★★", imagem: "https://images.unsplash.com/photo-1556816213-7571e807e654?w=400&h=560&q=80&fit=crop", cor1: "#030812", cor2: "#061838", destaque: "#1e5fff" },
+  { titulo: "Jujutsu Kaisen", japones: "呪術廻戦", genero: "Ação · Sobrenatural", estrelas: "★★★★★", imagem: "https://images.unsplash.com/photo-1534447677768-be436bb09401?w=400&h=560&q=80&fit=crop", cor1: "#0c0418", cor2: "#28084a", destaque: "#9d44ff" },
+  { titulo: "Romance", japones: "恋愛アニメ", genero: "Romance · Slice of Life", estrelas: "★★★★☆", imagem: "https://images.unsplash.com/photo-1522383225653-ed111181a951?w=400&h=560&q=80&fit=crop", cor1: "#180810", cor2: "#461030", destaque: "#ff4d88" },
+  { titulo: "Demon Slayer", japones: "鬼滅の刃", genero: "Ação · Fantasia", estrelas: "★★★★★", imagem: "https://images.unsplash.com/photo-1561731216-c3a4d99437d5?w=400&h=560&q=80&fit=crop", cor1: "#180a06", cor2: "#4a1808", destaque: "#ff4422" },
+];
+
+const PROJETOS = [
+  { titulo: "Projeto Alpha", descricao: "Aplicação web com autenticação, dashboard e CRUD dinâmico.", tecnologias: ["HTML","CSS","JavaScript","Node.js"], cor1:"#1a0828", cor2:"#3d1050", emoji:"⚡", status:"ativo", demo:"#", codigo:"#" },
+  { titulo: "Projeto Beta", descricao: "Sistema de gerenciamento de tarefas com interface responsiva e banco de dados.", tecnologias: ["JavaScript","MySQL","Express"], cor1:"#08181a", cor2:"#0f4050", emoji:"📋", status:"ativo", demo:"#", codigo:"#" },
+  { titulo: "Projeto Gamma", descricao: "Landing page moderna com animações e design 100% responsivo.", tecnologias: ["HTML","CSS","JavaScript"], cor1:"#1a1408", cor2:"#4a3010", emoji:"🎨", status:"andamento", demo:"#", codigo:"#" },
+];
+
+const PILULAS_ANIME = ["Blue Lock", "Jujutsu Kaisen", "Kaguya-sama", "Your Name", "Violet Evergarden", "Vinland Saga", "Chainsaw Man", "Spy × Family"];
+
+const INFO_PESSOAL = [
+  { rotulo: "Nome", valor: "Miguel Lima" },
+  { rotulo: "Curso", valor: "ADS · Análise e Dev. de Sistemas" },
+  { rotulo: "Experiência", valor: "1 ano" },
+  { rotulo: "Localização", valor: "Brasil 🇧🇷" },
+  { rotulo: "Disponibilidade", valor: "Freelance / Estágio" },
+  { rotulo: "Status", valor: "🟢 Online" },
+];
+
+const TEXTOS_DIGITANDO = ["Desenvolvedor Web_","Estudante de ADS_","Anime Enjoyer 🎌_","Bug Destroyer_","Full Stack Jr._"];
+
+const hamburguer = document.getElementById('hamburguer');
+const gavetaNav = document.getElementById('gaveta-nav');
+hamburguer.addEventListener('click', () => { hamburguer.classList.toggle('aberto'); gavetaNav.classList.toggle('aberta'); });
+document.querySelectorAll('#gaveta-nav ancora').forEach(a => a.addEventListener('click', () => { hamburguer.classList.remove('aberto'); gavetaNav.classList.remove('aberta'); }));
+
+if (window.matchMedia('(hover: hover)').matches) {
+  const cursor = document.getElementById('cursor');
+  const anelCursor = document.getElementById('anel-cursor');
+  let rx=0,ry=0;
+  document.addEventListener('mousemove', e => { cursor.style.left=e.clientX+'px'; cursor.style.top=e.clientY+'px'; rx+=(e.clientX-rx)*0.12; ry+=(e.clientY-ry)*0.12; });
+  (function animarAnel(){ anelCursor.style.left=rx+'px'; anelCursor.style.top=ry+'px'; requestAnimationFrame(animarAnel); })();
+  document.querySelectorAll('ancora,botao').forEach(el => {
+    el.addEventListener('mouseenter', () => { cursor.style.width='20px'; cursor.style.height='20px'; cursor.style.background='var(--destaque2)'; });
+    el.addEventListener('mouseleave', () => { cursor.style.width='12px'; cursor.style.height='12px'; cursor.style.background='var(--destaque)'; });
+  });
+}
+
+const tela=document.getElementById('particulas'),ctx=tela.getContext('2d');
+let L,A,partes=[];
+function redimensionar(){L=tela.width=window.innerWidth;A=tela.height=window.innerHeight;}
+redimensionar(); window.addEventListener('resize',redimensionar);
+class Particula{constructor(){this.resetar();}resetar(){this.x=Math.random()*L;this.y=Math.random()*A;this.tamanho=Math.random()*1.8+0.4;this.velocidade=Math.random()*0.35+0.08;this.angulo=Math.random()*Math.PI*2;this.opacidade=Math.random()*0.32+0.08;this.cor=Math.random()>.5?'230,60,94':'123,92,240';}atualizar(){this.y-=this.velocidade;this.x+=Math.sin(this.angulo+Date.now()*.001)*.3;if(this.y<-10){this.resetar();this.y=A+10;}}desenhar(){ctx.beginPath();ctx.arc(this.x,this.y,this.tamanho,0,Math.PI*2);ctx.fillStyle=`rgba(${this.cor},${this.opacidade})`;ctx.fill();}}
+const qtdParticulas=window.innerWidth<600?40:80;
+for(let i=0;i<qtdParticulas;i++)partes.push(new Particula());
+(function animar(){ctx.clearRect(0,0,L,A);partes.forEach(p=>{p.atualizar();p.desenhar();});requestAnimationFrame(animar);})();
+
+const elDigitando=document.getElementById('texto-digitando');
+let ti=0,ci=0,apagando=false;
+function digitar(){const palavra=TEXTOS_DIGITANDO[ti];elDigitando.textContent=apagando?palavra.slice(0,ci--):palavra.slice(0,ci++);if(!apagando&&ci>palavra.length){apagando=true;setTimeout(digitar,1100);return;}if(apagando&&ci<0){apagando=false;ti=(ti+1)%TEXTOS_DIGITANDO.length;ci=0;}setTimeout(digitar,apagando?45:95);}
+digitar();
+
+document.querySelectorAll('[data-alvo]').forEach(el=>{const alvo=+el.dataset.alvo;let c=0;const iv=setInterval(()=>{el.textContent=++c;if(c>=alvo)clearInterval(iv);},120);});
+
+const gradeHabilidades=document.getElementById('grade-habilidades');
+HABILIDADES.forEach((h,i)=>{const el=document.createElement('marcador');el.className='cartao-habilidade revelar'+(i%3===1?' revelar-atraso-1':i%3===2?' revelar-atraso-2':'');el.innerHTML=`<marcador class="icone-habilidade">${h.icone}</marcador><marcador class="nome-habilidade">${h.nome}</marcador><marcador class="etiquetas-habilidade">${h.etiquetas.map(e=>`<marcador class="etiqueta-habilidade">${e}</marcador>`).join('')}</marcador><marcador class="barra-progresso"><marcador class="preenchimento-barra" data-nivel="${h.nivel}"></marcador></marcador>`;gradeHabilidades.appendChild(el);});
+
+const gradeAnimes=document.getElementById('grade-animes');
+ANIMES.forEach((a,i)=>{const el=document.createElement('marcador');el.className='cartao-anime revelar'+(i%2===1?' revelar-atraso-1':'');el.innerHTML=`<marcador class="fundo-anime" style="background:linear-gradient(145deg,${a.cor1},${a.cor2});color:${a.destaque}">🎌</marcador><img class="imagem-anime" src="${a.imagem}" alt="${a.titulo}" loading="lazy" onerror="this.style.opacity=0"><marcador style="position:absolute;inset:0;background:linear-gradient(160deg,${a.cor1}cc 0%,transparent 50%);pointer-events:none"></marcador><marcador class="sobreposicao-anime"><marcador class="genero-anime">${a.genero}</marcador><marcador class="titulo-anime">${a.titulo}</marcador><marcador class="titulo-japones">${a.japones}</marcador><marcador class="estrelas">${a.estrelas}</marcador></marcador>`;gradeAnimes.appendChild(el);});
+
+const gradeProjetos=document.getElementById('grade-projetos');
+PROJETOS.forEach((p,i)=>{const el=document.createElement('marcador');el.className='cartao-projeto revelar'+(i===1?' revelar-atraso-1':i===2?' revelar-atraso-2':'');el.innerHTML=`<marcador class="imagem-projeto"><marcador class="fundo-imagem-projeto" style="background:linear-gradient(135deg,${p.cor1},${p.cor2});display:flex;align-items:center;justify-content:center;font-size:3.5rem;">${p.emoji}</marcador><marcador class="rotulo-projeto">${p.titulo.toUpperCase()}</marcador><marcador class="status-projeto ${p.status==='ativo'?'status-ativo':'status-andamento'}">${p.status==='ativo'?'● LIVE':'○ WIP'}</marcador></marcador><marcador class="corpo-projeto"><marcador class="titulo-projeto">${p.titulo}</marcador><paragrafo class="descricao-projeto">${p.descricao}</paragrafo><marcador class="tecnologias">${p.tecnologias.map(t=>`<marcador class="tecnologias">${t}</marcador>`).join('')}</marcador><marcador class="links-projeto"><ancora href="${p.demo}" class="link-projeto link-demo">Demo →</ancora><ancora href="${p.codigo}" class="link-projeto link-codigo">Código</ancora></marcador></marcador>`;gradeProjetos.appendChild(el);});
+
+const listaAnimes=document.getElementById('lista-animes');
+PILULAS_ANIME.forEach(a=>{const el=document.createElement('marcador');el.className='pilula-anime';el.textContent=`★ ${a}`;listaAnimes.appendChild(el);});
+
+const infoPessoal=document.getElementById('info-pessoal');
+INFO_PESSOAL.forEach(linha=>{const el=document.createElement('marcador');el.className='linha-info';el.innerHTML=`<marcador class="rotulo-info">${linha.rotulo}</marcador><marcador class="valor-info">${linha.valor}</marcador>`;infoPessoal.appendChild(el);});
+
+const observador=new IntersectionObserver(entradas=>{entradas.forEach(entrada=>{if(entrada.isIntersecting){entrada.target.classList.add('visivel');const barra=entrada.target.querySelector('.preenchimento-barra');if(barra)barra.style.width=barra.dataset.nivel+'%';}});},{threshold:0.08});
+document.querySelectorAll('.revelar,.cartao-habilidade,.cartao-anime,.cartao-projeto').forEach(el=>observador.observe(el));
+</script>
+</corpo>
+</html>
