@@ -15,9 +15,9 @@ const ANIMES = [
 ];
 
 const PROJETOS = [
-  { titulo: "Projeto Alpha", descricao: "Aplicação web com autenticação, dashboard e CRUD dinâmico.", tecnologias: ["HTML","CSS","JavaScript","Node.js"], cor1:"#1a0828", cor2:"#3d1050", emoji:"⚡", status:"ativo", demo:"#", codigo:"#" },
-  { titulo: "Projeto Beta", descricao: "Sistema de gerenciamento de tarefas com interface responsiva e banco de dados.", tecnologias: ["JavaScript","MySQL","Express"], cor1:"#08181a", cor2:"#0f4050", emoji:"📋", status:"ativo", demo:"#", codigo:"#" },
-  { titulo: "Projeto Gamma", descricao: "Landing page moderna com animações e design 100% responsivo.", tecnologias: ["HTML","CSS","JavaScript"], cor1:"#1a1408", cor2:"#4a3010", emoji:"🎨", status:"andamento", demo:"#", codigo:"#" },
+  { titulo: "Projeto Alpha", descricao: "Aplicação web com autenticação, dashboard e CRUD dinâmico.", tecnologias: ["HTML","CSS","JavaScript","Node.js"], cor1:"#1a0828", cor2:"#3d1050", imagem:"imagens/andamento.jpg", status:"inativo", demo:"#", codigo:"#" },
+  { titulo: "Projeto Beta", descricao: "Sistema de gerenciamento de tarefas com interface responsiva e banco de dados.", tecnologias: ["JavaScript","MySQL","Express"], cor1:"#08181a", cor2:"#0f4050", imagem:"imagens/andamento.jpg", status:"inativo", demo:"#", codigo:"#" },
+  { titulo: "Projeto Gamma", descricao: "Landing page moderna com animações e design 100% responsivo.", tecnologias: ["HTML","CSS","JavaScript"], cor1:"#1a1408", cor2:"#ffffff", imagem: "imagens/ONG.jpg", status:"Ativo", demo:"https://miguellima01.github.io/ONG/", codigo:"https://github.com/MiguelLima01/ONG" },
 ];
 
 const PILULAS_ANIME = ["Blue Lock", "Jujutsu Kaisen", "Kaguya-sama", "Your Name", "Violet Evergarden", "Vinland Saga", "Chainsaw Man", "Spy × Family"];
@@ -92,10 +92,45 @@ HABILIDADES.forEach((h, i) => {
 });
 
 const gradeProjetos = document.getElementById('grade-projetos');
+
 PROJETOS.forEach((p, i) => {
   const el = document.createElement('div');
-  el.className = 'cartao-projeto revelar' + (i===1?' revelar-atraso-1':i===2?' revelar-atraso-2':'');
-  el.innerHTML = `<div class="imagem-projeto"><div class="fundo-imagem-projeto" style="background:linear-gradient(135deg,${p.cor1},${p.cor2})">${p.emoji}</div><div class="rotulo-projeto">${p.titulo.toUpperCase()}</div><span class="status-projeto ${p.status==='ativo'?'status-ativo':'status-andamento'}">${p.status==='ativo'?'● LIVE':'○ WIP'}</span></div><div class="corpo-projeto"><div class="titulo-projeto">${p.titulo}</div><p class="descricao-projeto">${p.descricao}</p><div class="tecnologias">${p.tecnologias.map(t=>`<span>${t}</span>`).join('')}</div><div class="links-projeto"><a href="${p.demo}" class="link-projeto link-demo">Demo →</a><a href="${p.codigo}" class="link-projeto link-codigo">Código</a></div></div>`;
+
+  el.className =
+    'cartao-projeto revelar' +
+    (i === 1 ? ' revelar-atraso-1' : i === 2 ? ' revelar-atraso-2' : '');
+
+  el.innerHTML = `
+    <div class="imagem-projeto">
+      
+      <img src="${p.imagem}" alt="${p.titulo}" class="img-projeto">
+
+      <div class="overlay-projeto" style="background:linear-gradient(135deg, ${p.cor1}, ${p.cor2})"></div>
+
+      <span class="status-projeto ${p.status === 'ativo' ? 'status-ativo' : 'status-andamento'}">
+        ${p.status === 'ativo' ? '● LIVE' : '○ WIP'}
+      </span>
+
+      <div class="rotulo-projeto">${p.titulo.toUpperCase()}</div>
+
+    </div>
+
+    <div class="corpo-projeto">
+      <div class="titulo-projeto">${p.titulo}</div>
+
+      <p class="descricao-projeto">${p.descricao}</p>
+
+      <div class="tecnologias">
+        ${p.tecnologias.map(t => `<span>${t}</span>`).join('')}
+      </div>
+
+      <div class="links-projeto">
+        <a href="${p.demo}" class="link-projeto link-demo">Demo →</a>
+        <a href="${p.codigo}" class="link-projeto link-codigo">Código</a>
+      </div>
+    </div>
+  `;
+
   gradeProjetos.appendChild(el);
 });
 
