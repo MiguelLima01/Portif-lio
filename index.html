@@ -1,142 +1,139 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-<cabecalho>
+<head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<titulo>Miguel Lima · Dev Portfolio</titulo>
+<title>Miguel Lima · Dev Portfolio</title>
 <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600;700&family=Noto+Serif+JP:wght@400;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
+</head>
+<body>
 
-</cabecalho>
-<corpo>
-
-<secao id="cursor-wrapper">
-  <marcador id="cursor"></marcador>
-  <marcador id="anel-cursor"></marcador>
-</secao>
+<div id="cursor"></div>
+<div id="anel-cursor"></div>
 <canvas id="particulas"></canvas>
 
-<navegacao>
-  <marcador class="logo">ML<spansubtitulo> · ポートフォリオ</spansubtitulo></marcador>
-  <lista class="links-nav">
-    <item><a href="#inicio">Início</a></item>
-    <item><a href="#habilidades">Skills</a></item>
-    <item><a href="#animes">Animes</a></item>
-    <item><a href="#projetos">Projetos</a></item>
-    <item><a href="#sobre">Sobre</a></item>
-    <item><a href="#contato">Contato</a></item>
-  </lista>
-  <botao class="hamburguer" id="hamburguer" aria-label="Menu">
-    <traco></traco><traco></traco><traco></traco>
-  </botao>
-</navegacao>
+<nav>
+  <div class="logo">ML<span> · ポートフォリオ</span></div>
+  <ul class="links-nav">
+    <li><a href="#inicio">Início</a></li>
+    <li><a href="#habilidades">Skills</a></li>
+    <li><a href="#projetos">Projetos</a></li>
+    <li><a href="#sobre">Sobre</a></li>
+    <li><a href="#animes">Animes</a></li>
+    <li><a href="#contato">Contato</a></li>
+  </ul>
+  <button class="hamburguer" id="hamburguer" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
 
-<marcador class="gaveta-nav" id="gaveta-nav">
+<div class="gaveta-nav" id="gaveta-nav">
   <a href="#inicio">Início</a>
   <a href="#habilidades">Skills</a>
-  <a href="#animes">Animes</a>
   <a href="#projetos">Projetos</a>
   <a href="#sobre">Sobre</a>
+  <a href="#animes">Animes</a>
   <a href="#contato">Contato</a>
-</marcador>
+</div>
 
-<secao id="inicio">
-  <marcador class="texto-fundo">開発者</marcador>
-  <marcador class="conteudo-inicio">
-    <marcador class="etiqueta-inicio">Disponível para projetos</marcador>
-    <titulo1 class="nome-inicio">
-      Miguel Lima<marcador class="em-destaque">.</marcador>
-      <marcador class="kanji">ソフトウェア開発者</marcador>
-    </titulo1>
-    <paragrafo class="cargo"><marcador class="digitando" id="texto-digitando"></marcador></paragrafo>
-    <paragrafo class="descricao">Dev apaixonado por código limpo, interfaces bonitas e uma boa OST de anime tocando no fundo. Construindo o futuro um commit de cada vez.</paragrafo>
-    <marcador class="botoes">
-      <a href="#projetos" class="botao-primario"><marcador>Ver Projetos</marcador><marcador>→</marcador></a>
+<section id="inicio">
+  <div class="texto-fundo">開発者</div>
+  <div class="conteudo-inicio">
+    <div class="etiqueta-inicio">Disponível para projetos</div>
+    <h1 class="nome-inicio">
+      Miguel Lima<span class="em-destaque">.</span>
+      <span class="kanji">ソフトウェア開発者</span>
+    </h1>
+    <p class="cargo"><span class="digitando" id="texto-digitando"></span></p>
+    <p class="descricao-inicio">Dev apaixonado por código limpo, interfaces bonitas e uma boa OST de anime tocando no fundo. Construindo o futuro um commit de cada vez.</p>
+    <div class="botoes">
+      <a href="#projetos" class="botao-primario"><span>Ver Projetos</span><span>→</span></a>
       <a href="#contato" class="botao-secundario">Contato</a>
-    </marcador>
-  </marcador>
-  <marcador class="decoracao-inicio">
-    <marcador class="anel-externo">
-      <marcador class="anel-interno">
-        <marcador class="centro-anel">⌨</marcador>
-      </marcador>
-    </marcador>
-  </marcador>
-  <marcador class="estatisticas">
-    <marcador class="stat"><marcador class="stat-numero" data-alvo="5">0</marcador><marcador class="stat-rotulo">Projetos</marcador></marcador>
-    <marcador class="stat"><marcador class="stat-numero" data-alvo="1">0</marcador><marcador class="stat-rotulo">Ano de exp.</marcador></marcador>
-    <marcador class="stat"><marcador class="stat-numero" data-alvo="4">0</marcador><marcador class="stat-rotulo">Tecnologias</marcador></marcador>
-  </marcador>
-</secao>
+    </div>
+  </div>
+  <div class="decoracao-inicio">
+    <div class="anel-externo">
+      <div class="anel-interno">
+        <div class="centro-anel">⌨</div>
+      </div>
+    </div>
+  </div>
+  <div class="estatisticas">
+    <div class="stat"><span class="numero-stat" data-alvo="5">0</span><span class="rotulo-stat">Projetos</span></div>
+    <div class="stat"><span class="numero-stat" data-alvo="1">0</span><span class="rotulo-stat">Ano de exp.</span></div>
+    <div class="stat"><span class="numero-stat" data-alvo="4">0</span><span class="rotulo-stat">Tecnologias</span></div>
+  </div>
+</section>
 
-<secao id="habilidades">
-  <marcador class="cabecalho-secao">
-    <marcador class="numero-secao">01</marcador>
-    <titulo2 class="titulo-secao">Habilidades</titulo2>
-    <marcador class="linha-divisoria"></marcador>
-  </marcador>
-  <grade id="grade-habilidades" class="grade-habilidades"></grade>
-</secao>
+<section id="habilidades">
+  <div class="cabecalho-secao">
+    <span class="numero-secao">01</span>
+    <h2 class="titulo-secao">Habilidades</h2>
+    <div class="linha-divisoria"></div>
+  </div>
+  <div id="grade-habilidades" class="grade-habilidades"></div>
+</section>
 
-<secao id="animes">
-  <marcador class="cabecalho-secao">
-    <marcador class="numero-secao">02</marcador>
-    <titulo2 class="titulo-secao">Meus Animes</titulo2>
-    <marcador class="linha-divisoria"></marcador>
-  </marcador>
-  <paragrafo class="descricao-animes revelar">Além de codar, sou otaku sem arrependimentos. Aqui estão os animes que moram no meu coração — e na minha playlist no loop.</paragrafo>
-  <grade id="grade-animes" class="grade-animes"></grade>
-</secao>
+<section id="projetos">
+  <div class="cabecalho-secao">
+    <span class="numero-secao">02</span>
+    <h2 class="titulo-secao">Projetos</h2>
+    <div class="linha-divisoria"></div>
+  </div>
+  <div id="grade-projetos" class="grade-projetos"></div>
+</section>
 
-<secao id="projetos">
-  <marcador class="cabecalho-secao">
-    <marcador class="numero-secao">03</marcador>
-    <titulo2 class="titulo-secao">Projetos</titulo2>
-    <marcador class="linha-divisoria"></marcador>
-  </marcador>
-  <grade id="grade-projetos" class="grade-projetos"></grade>
-</secao>
+<section id="sobre">
+  <div class="cabecalho-secao">
+    <span class="numero-secao">03</span>
+    <h2 class="titulo-secao">Sobre Mim</h2>
+    <div class="linha-divisoria"></div>
+  </div>
+  <div class="grade-sobre">
+    <div class="texto-sobre revelar">
+      <p>E aí! Sou <strong>Miguel Lima</strong>, desenvolvedor e estudante de <strong>Análise e Desenvolvimento de Sistemas</strong>. Acredito que bom código, assim como um bom anime, precisa de história, ritmo e impacto.</p>
+      <p>Com <strong>1 ano de experiência</strong>, estou sempre buscando aprender novas tecnologias e criar projetos que façam diferença. Cada bug resolvido é um boss derrotado.</p>
+      <p>Quando não estou codando, provavelmente estou maratonando algum anime novo ou debatendo qual arco do Blue Lock foi o melhor. Sem arrependimentos kkkk</p>
+      <div class="animes-favoritos">
+        <span class="titulo-animes-favoritos">▸ Top animes da lista</span>
+        <div class="lista-animes" id="lista-animes"></div>
+      </div>
+    </div>
+    <div class="info-pessoal revelar revelar-atraso-2" id="info-pessoal"></div>
+  </div>
+</section>
 
-<secao id="sobre">
-  <marcador class="cabecalho-secao">
-    <marcador class="numero-secao">04</marcador>
-    <titulo2 class="titulo-secao">Sobre Mim</titulo2>
-    <marcador class="linha-divisoria"></marcador>
-  </marcador>
-  <marcador class="grade-sobre">
-    <marcador class="texto-sobre revelar">
-      <paragrafo>E aí! Sou <enfase>Miguel Lima</enfase>, desenvolvedor e estudante de <enfase>Análise e Desenvolvimento de Sistemas</enfase>. Acredito que bom código, assim como um bom anime, precisa de história, ritmo e impacto.</paragrafo>
-      <paragrafo>Com <enfase>1 ano de experiência</enfase>, estou sempre buscando aprender novas tecnologias e criar projetos que façam diferença. Cada bug resolvido é um boss derrotado.</paragrafo>
-      <paragrafo>Quando não estou codando, provavelmente estou maratonando algum anime novo ou debatendo qual arco do Blue Lock foi o melhor. Sem arrependimentos kkkk</paragrafo>
-      <marcador class="animes-favoritos">
-        <marcador class="titulo-animes-favoritos">▸ Top animes da lista</marcador>
-        <marcador class="lista-animes" id="lista-animes"></marcador>
-      </marcador>
-    </marcador>
-    <marcador class="info-pessoal revelar revelar-atraso-2" id="info-pessoal"></marcador>
-  </marcador>
-</secao>
+<section id="animes">
+  <div class="cabecalho-secao">
+    <span class="numero-secao">04</span>
+    <h2 class="titulo-secao">Meus Animes</h2>
+    <div class="linha-divisoria"></div>
+  </div>
+  <p class="descricao-animes revelar">Além de codar, sou otaku sem arrependimentos. Aqui estão os animes que moram no meu coração — e na minha playlist no loop.</p>
+  <div id="grade-animes" class="grade-animes"></div>
+</section>
 
-<secao id="contato">
-  <marcador class="cabecalho-secao" style="justify-content:center;margin-bottom:28px;">
-    <marcador class="numero-secao">05</marcador>
-    <titulo2 class="titulo-secao">Contato</titulo2>
-  </marcador>
-  <titulo3 class="frase-contato revelar">Vamos criar algo incrível juntos?</titulo3>
-  <paragrafo class="sub-contato revelar">Aberto a novos projetos, colaborações e boas conversas sobre tech (e anime, claro).</paragrafo>
-  <marcador class="links-contato revelar">
-    <a href="mailto:miguellimareis01@gmail.com" class="link-contato">Email</a>
-    <a href="https://github.com/MiguelLima01" target="_blank" class="link-contato">GitHub</a>
-    <a href="https://www.linkedin.com/in/miguel-lima-4685773a8/" target="_blank" class="link-contato">LinkedIn</a>
-    <a href="https://wa.me/5516999665293" target="_blank" class="link-contato">WhatsApp</a>
+<section id="contato">
+  <div class="cabecalho-secao" style="justify-content:center;margin-bottom:28px;">
+    <span class="numero-secao">05</span>
+    <h2 class="titulo-secao">Contato</h2>
+  </div>
+  <h3 class="frase-contato revelar">Vamos criar algo incrível juntos?</h3>
+  <p class="sub-contato revelar">Aberto a novos projetos, colaborações e boas conversas sobre tech (e anime, claro).</p>
+  <div class="links-contato revelar">
+    <a href="mailto:miguellimareis01@gmail.com" class="link-contato">✉ Email</a>
+    <a href="https://github.com/MiguelLima01" target="_blank" class="link-contato">⌥ GitHub</a>
+    <a href="https://www.linkedin.com/in/miguel-lima-4685773a8/" target="_blank" class="link-contato">⊞ LinkedIn</a>
+    <a href="https://wa.me/5516999665293" target="_blank" class="link-contato">💬 WhatsApp</a>
+  </div>
+</section>
 
-  </marcador>
-</secao>
+<footer>
+  <div class="logo-rodape">· Miguel Lima · ポートフォリオ</div>
+  <div class="creditos-rodape">Feito com ♥ café e OST de anime</div>
+</footer>
 
-<rodape>
-  <marcador class="rodape-logo">· Miguel Lima · ポートフォリオ</marcador>
-  <marcador class="rodape-creditos">Feito com ♥ café e OST de anime</marcador>
-</rodape>
-  <script src="script.js"></script>
-</corpo>
+<script src="script.js"></script>
+</body>
 </html>
