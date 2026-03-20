@@ -420,3 +420,43 @@ footer {
 ::-webkit-scrollbar { width: 4px; }
 ::-webkit-scrollbar-track { background: var(--fundo); }
 ::-webkit-scrollbar-thumb { background: var(--destaque); }
+
+.img-projeto {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+.overlay-projeto {
+  position: absolute;
+  inset: 0;
+  opacity: 0.6;
+  z-index: 2;
+}
+
+.imagem-projeto {
+  position: relative;
+  height: 180px;
+  overflow: hidden;
+  border-radius: 12px 12px 0 0;
+}
+
+.rotulo-projeto {
+  position: absolute;
+  bottom: 10px;
+  left: 15px;
+  z-index: 3;
+  font-weight: bold;
+  color: white;
+}
+
+.status-projeto {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 3;
+  font-size: 0.8rem;
+}
